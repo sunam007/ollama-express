@@ -14,13 +14,18 @@
 - view available models on ollama `ollama list`
 
 ### Run Express.js Server
-- define PORT and MODEL on the .env file
-- install all the dependencies `npm install`
+- clone the repository `git clone https://github.com/sunam007/ollama-express.git`
+- change directory `cd ollama-express`
+
+- install the dependencies `npm install`
+
+- define `PORT` and `MODEL` on the `.env` file
+
 - `npm run dev` starts your express.js server at http://localhost:5555 if PORT is not specified in the `.env` file
 
 ### API endpoint
-`POST  http://localhost:5555/api/chat` </br>
-
+`POST  http://localhost:5555/api/chat`
+</br>
 Request Body:
 `{
   "message": "Why the sky is blue?"
