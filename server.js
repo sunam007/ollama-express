@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import ollama from "ollama";
+import axios from "axios";
 import { generatePrompt } from "./helper.js";
 
 dotenv.config();
@@ -56,6 +57,7 @@ app.post("/api/code/chat", async (req, res) => {
     res.end();
   }
 });
+
 app.post("/api/chat", async (req, res) => {
   try {
     const modelList = await ollama.list();
@@ -94,6 +96,25 @@ app.post("/api/chat", async (req, res) => {
       error.response ? error.response.data : error.message
     );
     res.end();
+  }
+});
+
+app.post("/api/chat/tex2image", async (req, res) => {
+  try {
+    const response = await axios.post(process.env.SD_TXT2IMG_API, req.body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error("Error while calling Automatic1111 API:", error.message);
+
+    res.status(error.response?.status || 500).json({
+      error:
+        error.response?.data || "An error occurred while generating the image.",
+    });
   }
 });
 
